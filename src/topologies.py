@@ -21,10 +21,10 @@ def get_topology(name, n, **kwargs):
         return nx.grid_2d_graph(side, side)
 
     elif name == "hierarchical_modular":
-        # 4 communities with sparse inter-links
+        # 4 communities with sparse inter-links; p_out=0.05 improves connectivity
         return nx.gaussian_random_partition_graph(
             n, s=kwargs.get("s", 25), v=kwargs.get("v", 10),
-            p_in=kwargs.get("p_in", 0.5), p_out=kwargs.get("p_out", 0.01)
+            p_in=kwargs.get("p_in", 0.5), p_out=kwargs.get("p_out", 0.05)
         )
 
     elif name == "scale_free":
@@ -47,6 +47,17 @@ def get_topology(name, n, **kwargs):
         # Grid with per-node gamma variation (handled in engine)
         side = int(np.sqrt(n))
         return nx.grid_2d_graph(side, side)
+
+    elif name == "random_regular":
+        # d-regular random graph (same degree, good connectivity)
+        d = kwargs.get("d", 4)
+        d = min(d, n - 1)
+        return nx.random_regular_graph(d, n)
+
+    elif name == "erdos_renyi":
+        # Erdős–Rényi G(n,p); p tuned for connectivity
+        p = kwargs.get("p", 2.5 * np.log(n) / n)  # above connectivity threshold
+        return nx.erdos_renyi_graph(n, min(p, 0.99))
 
     else:
         # Default: complete graph (for baseline comparison)

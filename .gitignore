@@ -18,8 +18,8 @@ build/
 *.swp
 *.swo
 
-# Data/output (optional: remove if you want to track data/)
-data/*.csv
+# Data/output (paper results are committed for reproducibility)
+# data/*.csv  # uncomment to ignore local runs
 
 # pytest
 .pytest_cache/
