@@ -23,3 +23,17 @@ pip install -r requirements.txt
 ```bash
 pytest tests/ -v
 ```
+
+Or from any directory:
+```bash
+python run_tests.py
+```
+
+### Google Colab
+```python
+# Clone, install, run (one cell)
+!git clone https://github.com/leroyjware/law.git
+%cd law
+!pip install -q -r requirements.txt
+!python run_tests.py
+```
